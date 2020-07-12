@@ -1,27 +1,20 @@
-#include <Arduino.h>
-#include <ServoTimer2.h>
-#include <AltSoftSerial.h>
+#include <SoftwareSerial.h>
+
+// Setup the software serial
+SoftwareSerial serial_connection(10,11);
 
 // Variables for the bluetooth communication
-AltSoftSerial altSerial;
-
-#define BUFFER_SIZE 10//4
+#define BUFFER_SIZE 16;
 char inData[BUFFER_SIZE];
 char inChar=-1;
 int i=0;
-
-unsigned long last_data;
-
-//int first_bytes;
 int remaining_bytes;
-
 String indata_str;
 
-// ************* Bluetooth ************* //
 
 bool getCtrlSignal(){
 
-  int byte_count = altSerial.available();
+  int byte_count = serial_connection.available();
 
   if(byte_count>=BUFFER_SIZE){                          // Om tillräckligt många bytes har kommit
     remaining_bytes=byte_count - BUFFER_SIZE;           // Hur många bytes till övers som kommit
@@ -29,7 +22,7 @@ bool getCtrlSignal(){
 
     // Läs datan som blev skickad
     for(i=0;i<BUFFER_SIZE;i++){
-      inChar=altSerial.read();
+      inChar=serial_connection.read();
       inData[i]=inChar;
       }
     inData[i]="\0";
@@ -49,34 +42,23 @@ void cleanBluetooth(){
      }
   }
 
-bool validateRecivedData(String data){
-    #TODO: IMPLEMENT THIS
-    return true;
-}
-
-void updateBaseThrust(){
+void checkForSignal(){
   // If we have a new controll signal
   if(getCtrlSignal()){
-      // If the data is not corrupted
-      if(validateRecivedData(indata_str)){
-        #TODO: SET FIRE PIN TO HIGH HERE
-      }
+      #TODO: SET FIRE PIN TO HIGH HERE IF EQUAL TO 123
       cleanBluetooth();
     }
 }
 
-// ************* Main Program ************* //
-
 void setup(){
-  Serial.println("-------- BLUETOOTH ---------");
-
-  altSerial.begin(9600);
+  Serial.begin(9600);
+  serial_connection.begin(9600);
 
   // Send to the python program that the drone is ready.
-  Serial.println("Sending start to python");
-  altSerial.println("start");
+  Serial.println("Sending ready to python");
+  altSerial.println("ready");
 }
 
 void loop(){
-    updateBaseThrust();
+    checkForSignal();
  }
