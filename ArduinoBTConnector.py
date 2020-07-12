@@ -13,10 +13,14 @@ class ArduinoBTConnector():
         :param port: The port where the module is located on the computer
         :param nr: The baud. Should be the same as in the Arduino program
         """
-
-        self.bt_con = serial.Serial(port, nr)
-        print("Connected to Arduino!")
-        self.bt_con.flushInput()
+        try:
+            self.bt_con = serial.Serial(port, nr)
+            print("Connected to Arduino!")
+            self.bt_con.flushInput()
+            return True
+        except:
+            print("Could not connect to " + port)
+            return False
 
     def send_string(self, string):
         """
