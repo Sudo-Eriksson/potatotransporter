@@ -4,13 +4,14 @@
 SoftwareSerial serial_connection(10,11);
 
 // Variables for the bluetooth communication
-#define BUFFER_SIZE 16;
+#define BUFFER_SIZE 16; #TODO: CHECK IF THIS IS THE CORRECT AMOUNT OF BYTES
 char inData[BUFFER_SIZE];
 char inChar=-1;
 int i=0;
 int remaining_bytes;
 String indata_str;
 
+#TODO: SETUP THE FIRE PIN
 
 bool getCtrlSignal(){
 
@@ -45,9 +46,13 @@ void cleanBluetooth(){
 void checkForSignal(){
   // If we have a new controll signal
   if(getCtrlSignal()){
-      #TODO: SET FIRE PIN TO HIGH HERE IF EQUAL TO 123
+      #TODO: IF MESSAGE EQUAL TO 123, CALL FOR fireTransporter.
       cleanBluetooth();
     }
+}
+
+void fireTransporter(){
+    #TODO: SET FIRE PIN TO HIGH
 }
 
 void setup(){
@@ -57,6 +62,8 @@ void setup(){
   // Send to the python program that the drone is ready.
   Serial.println("Sending ready to python");
   altSerial.println("ready");
+
+  # TODO: SETUP THE FIRE PIN
 }
 
 void loop(){
