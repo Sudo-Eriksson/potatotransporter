@@ -41,7 +41,7 @@ class MainGui:
         self.app.exec_()
 
     def connect_with_BT(self):
-        if self.arduino_connection.connect_to_arduino(port="/dev/tty.HC-06-DevB", nr=9600):
+        if self.arduino_connection.connect_to_arduino(port="/dev/tty.HC-05-DevB", nr=9600):
             self.allowed_to_fire = True
             self.fire_button.setEnabled(self.allowed_to_fire)
             self.info_str.setText("Connected!")

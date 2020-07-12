@@ -40,7 +40,6 @@ class ArduinoBTConnector():
         """
         Method for closing the connection to the Arduino.
         """
-
         self.bt_con.close()
 
 """
