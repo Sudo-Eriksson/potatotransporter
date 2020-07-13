@@ -80,11 +80,9 @@ void setup(){
   Serial.begin(9600);
   serial_connection.begin(9600);
 
-  // Send to the python program that the transporter is ready.
-  Serial.println("Sending ready to python");
-  serial_connection.println("ready");
-
   pinMode(FIRE_SIGNAL_PIN, OUTPUT);
+
+  Serial.println("Setup done");
 }
 
 void loop(){
