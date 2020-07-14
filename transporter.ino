@@ -6,14 +6,13 @@ int FIRE_SIGNAL_PIN = 6;
 SoftwareSerial serial_connection(10,11);
 
 // Variables for the bluetooth communication
-#define BUFFER_SIZE 3                                  //TODO: CHECK IF THIS IS THE CORRECT AMOUNT OF BYTES
+#define BUFFER_SIZE 3
 char inData[BUFFER_SIZE];
 char inChar=-1;
 int i=0;
 int remaining_bytes;
 String indata_str;
 
-//TODO: SETUP THE FIRE PIN
 
 bool getCtrlSignal(){
   /*
@@ -57,7 +56,6 @@ void checkForSignal(){
   */
   // If we have a new control signal
   if(getCtrlSignal()){
-      //TODO: IF MESSAGE EQUAL TO 123, CALL FOR fireTransporter.
       if(indata_str == "123"){
            fireTransporter(10000);
       }
